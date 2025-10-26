@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rehberler - Viva Reklam Ajansı</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Added styles for locked/unlocked states and content display */
+        .guide-content {
+            display: none;
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: rgba(0, 206, 209, 0.05);
+            border: 1px solid rgba(0, 206, 209, 0.2);
+            border-radius: 12px;
+        }
+
+        .guide-content.unlocked {
+            display: block;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .guide-video {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .guide-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .guide-actions a {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .locked-overlay {
+            position: relative;
+        }
+
+        .locked-overlay::after {
+            content: '🔒';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .feature-card.locked .locked-overlay::after {
+            opacity: 1;
+        }
+
+        .feature-card.locked {
+            opacity: 0.6;
+        }
+
+        .verification-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(0, 206, 209, 0.1);
+            border: 1px solid rgba(0, 206, 209, 0.3);
+            border-radius: 20px;
+            color: #00CED1;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .download-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .download-modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: rgba(20, 20, 30, 0.95);
+            border: 1px solid rgba(0, 206, 209, 0.3);
+            border-radius: 20px;
+            padding: 3rem;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            animation: modalSlideIn 0.3s ease-out;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, #00CED1, #87CEEB);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+        }
+
+        .modal-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #00CED1, #87CEEB);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .modal-description {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 1rem;
+            flex-direction: column;
+        }
+
+        .instagram-handle {
+            font-weight: 600;
+            color: #00CED1;
+            font-size: 1.1rem;
+            margin: 1rem 0;
+        }
+
+        .modal-step {
+            display: none;
+        }
+
+        .modal-step.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <img src="public/logo.png" alt="Viva Logo" width="40" height="40" style="object-fit: contain;">
+                    <span><span style="color: #00CED1; font-weight: 700;">VIVA</span> <span style="color: rgba(255, 255, 255, 0.9); font-weight: 500;">Reklam Ajansı</span></span>
+                </a>
+
+                <nav class="desktop-nav">
+                    <a href="index.html#hizmetler">Hizmetler</a>
+                    <a href="index.html#paketler">Paketler</a>
+                    <a href="ekibimiz.html">Ekibimiz</a>
+                    <a href="index.html#iletisim">İletişim</a>
+                </nav>
+
+                <div class="header-actions">
+                    <a href="https://wa.me/905346823427" class="btn-primary">Teklif Alın</a>
+                    <button class="mobile-menu-btn" id="mobileMenuBtn">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="mobile-menu" id="mobileMenu">
+            <nav>
+                <a href="index.html#hizmetler">Hizmetler</a>
+                <a href="index.html#paketler">Paketler</a>
+                <a href="ekibimiz.html">Ekibimiz</a>
+                <a href="index.html#iletisim">İletişim</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="team-hero">
+        <div class="container">
+            <div class="team-hero-content">
+                <div class="hero-badge">
+                    <span class="badge-icon">📚</span>
+                    <span>Rehberler</span>
+                </div>
+                <h1 class="hero-title">
+                    Dijital Pazarlama <span class="gradient-text">Rehberleri</span>
+                </h1>
+                <p class="hero-description">
+                    Dijital pazarlama stratejilerinizi geliştirmek için kapsamlı rehberlerimize göz atın. Tüm rehberler ücretsiz!
+                </p>
+                <div id="verificationBadge" style="display: none;">
+                    <div class="verification-badge">
+                        <span>✓</span>
+                        <span>Instagram Takipçimizsiniz - Tüm Rehberler Açıldı!</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="container">
+            <div class="features-grid">
+                <div class="feature-card" data-guide="google-ads">
+                    <div class="feature-icon locked-overlay">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"/>
+                            <path d="m21 21-4.35-4.35"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Google Ads Başlangıç Rehberi</h3>
+                    <p class="feature-description">
+                        Google Ads'e sıfırdan başlayanlar için kapsamlı rehber. Kampanya kurulumundan optimizasyona kadar tüm adımlar detaylı anlatılıyor.
+                    </p>
+                    <button class="btn-secondary unlock-btn" style="margin-top: 1.5rem; width: 100%;">Rehberi Aç</button>
+                    
+                    <div class="guide-content">
+                        <div class="guide-video">
+                            <span>📹 Video Rehber </span>
+                        </div>
+                        <div class="guide-actions">
+                            <a href="#" class="btn-primary" onclick="alert('PDF indiriliyor...'); return false;">📄 PDF İndir</a>
+                            <a href="#" class="btn-secondary" onclick="alert('Video oynatılıyor...'); return false;">▶️ Videoyu İzle</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feature-card" data-guide="instagram">
+                    <div class="feature-icon locked-overlay">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Instagram Reklam Stratejileri</h3>
+                    <p class="feature-description">
+                        Instagram'da etkili reklam kampanyaları nasıl oluşturulur? Hedef kitle belirleme, içerik stratejisi ve bütçe optimizasyonu.
+                    </p>
+                    <button class="btn-secondary unlock-btn" style="margin-top: 1.5rem; width: 100%;">Rehberi Aç</button>
+                    
+                    <div class="guide-content">
+                        <div class="guide-video">
+                            <span>📹 Video Rehber </span>
+                        </div>
+                        <div class="guide-actions">
+                            <a href="#" class="btn-primary" onclick="alert('PDF indiriliyor...'); return false;">📄 PDF İndir</a>
+                            <a href="#" class="btn-secondary" onclick="alert('Video oynatılıyor...'); return false;">▶️ Videoyu İzle</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feature-card" data-guide="youtube">
+                    <div class="feature-icon locked-overlay">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/>
+                            <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">YouTube İçerik Pazarlama</h3>
+                    <p class="feature-description">
+                        YouTube'da başarılı olmak için video içerik stratejileri, SEO optimizasyonu ve izleyici etkileşimi artırma teknikleri.
+                    </p>
+                    <button class="btn-secondary unlock-btn" style="margin-top: 1.5rem; width: 100%;">Rehberi Aç</button>
+                    
+                    <div class="guide-content">
+                        <div class="guide-video">
+                            <span>📹 Video Rehber </span>
+                        </div>
+                        <div class="guide-actions">
+                            <a href="#" class="btn-primary" onclick="alert('PDF indiriliyor...'); return false;">📄 PDF İndir</a>
+                            <a href="#" class="btn-secondary" onclick="alert('Video oynatılıyor...'); return false;">▶️ Videoyu İzle</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feature-card" data-guide="tiktok">
+                    <div class="feature-icon locked-overlay">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">TikTok Viral İçerik Rehberi</h3>
+                    <p class="feature-description">
+                        TikTok'ta viral olmak için içerik stratejileri, trend analizi ve algoritma optimizasyonu. Organik büyüme teknikleri.
+                    </p>
+                    <button class="btn-secondary unlock-btn" style="margin-top: 1.5rem; width: 100%;">Rehberi Aç</button>
+                    
+                    <div class="guide-content">
+                        <div class="guide-video">
+                            <span>📹 Video Rehber </span>
+                        </div>
+                        <div class="guide-actions">
+                            <a href="#" class="btn-primary" onclick="alert('PDF indiriliyor...'); return false;">📄 PDF İndir</a>
+                            <a href="#" class="btn-secondary" onclick="alert('Video oynatılıyor...'); return false;">▶️ Videoyu İzle</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feature-card" data-guide="seo">
+                    <div class="feature-icon locked-overlay">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="1" x2="12" y2="23"/>
+                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">SEO Optimizasyon Kılavuzu 2025</h3>
+                    <p class="feature-description">
+                         Güncel SEO stratejileri. Teknik SEO, içerik optimizasyonu, link building ve yerel SEO teknikleri.
+                    </p>
+                    <button class="btn-secondary unlock-btn" style="margin-top: 1.5rem; width: 100%;">Rehberi Aç</button>
+                    
+                    <div class="guide-content">
+                        <div class="guide-video">
+                            <span>📹 Video Rehber </span>
+                        </div>
+                        <div class="guide-actions">
+                            <a href="#" class="btn-primary" onclick="alert('PDF indiriliyor...'); return false;">📄 PDF İndir</a>
+                            <a href="#" class="btn-secondary" onclick="alert('Video oynatılıyor...'); return false;">▶️ Videoyu İzle</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feature-card" data-guide="analytics">
+                    <div class="feature-icon locked-overlay">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Veri Analizi ve ROI Hesaplama</h3>
+                    <p class="feature-description">
+                        Dijital pazarlama verilerinizi nasıl analiz eder ve ROI hesaplarsınız? Google Analytics, Meta Pixel ve daha fazlası.
+                    </p>
+                    <button class="btn-secondary unlock-btn" style="margin-top: 1.5rem; width: 100%;">Rehberi Aç</button>
+                    
+                    <div class="guide-content">
+                        <div class="guide-video">
+                            <span>📹 Video Rehber </span>
+                        </div>
+                        <div class="guide-actions">
+                            <a href="#" class="btn-primary" onclick="alert('PDF indiriliyor...'); return false;">📄 PDF İndir</a>
+                            <a href="#" class="btn-secondary" onclick="alert('Video oynatılıyor...'); return false;">▶️ Videoyu İzle</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feature-card" data-guide="ecommerce">
+                    <div class="feature-icon locked-overlay">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">E-Ticaret Reklam Stratejileri</h3>
+                    <p class="feature-description">
+                        E-ticaret siteniz için etkili reklam kampanyaları. Ürün reklamları, remarketing ve satış hunisi optimizasyonu.
+                    </p>
+                    <button class="btn-secondary unlock-btn" style="margin-top: 1.5rem; width: 100%;">Rehberi Aç</button>
+                    
+                    <div class="guide-content">
+                        <div class="guide-video">
+                            <span>📹 Video Rehber </span>
+                        </div>
+                        <div class="guide-actions">
+                            <a href="#" class="btn-primary" onclick="alert('PDF indiriliyor...'); return false;">📄 PDF İndir</a>
+                            <a href="#" class="btn-secondary" onclick="alert('Video oynatılıyor...'); return false;">▶️ Videoyu İzle</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="download-modal" id="downloadModal">
+        <div class="modal-content">
+            <div class="modal-step active" id="step1">
+                <div class="modal-icon">📱</div>
+                <h2 class="modal-title">Instagram'da Bizi Takip Edin!</h2>
+                <p class="modal-description">
+                    Tüm rehberlere erişmek için Instagram hesabımızı takip etmeniz gerekmektedir. Takip ettikten sonra tüm rehberler ve videolar açılacaktır.
+                </p>
+                <div class="instagram-handle">@viva_advert0</div>
+                <div class="modal-actions">
+                    <a href="https://instagram.com/viva_advert0" target="_blank" class="btn-primary btn-full" id="followInstagram">Instagram'da Takip Et</a>
+                    <button class="btn-secondary btn-full" id="alreadyFollowed">Zaten Takip Ediyorum</button>
+                    <button class="btn-secondary btn-full" id="closeModal">İptal</button>
+                </div>
+            </div>
+
+            <div class="modal-step" id="step2">
+                <div class="modal-icon">✓</div>
+                <h2 class="modal-title">Takip Ettiğinizi Onaylayın</h2>
+                <p class="modal-description">
+                 Takip ettiyseniz, aşağıdaki butona tıklayarak tüm rehberlere erişebilirsiniz.
+                 "Takipten çıkıldığında içeriklerler kaldırılır!" 
+                </p>
+                <div class="modal-actions">
+                    <button class="btn-primary btn-full" id="confirmFollow">Evet, Takip Ettim</button>
+                    <button class="btn-secondary btn-full" id="backToStep1">Geri Dön</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="team-cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="cta-title">Özel Danışmanlık İster misiniz?</h2>
+                <p class="cta-description">
+                    Rehberlerimiz yeterli gelmedi mi? Uzman ekibimizden özel danışmanlık alın.
+                </p>
+                <div class="cta-actions">
+                    <a href="https://wa.me/905346823427" class="btn-primary btn-large">Danışmanlık</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <img src="public/logo.png" alt="Viva Logo" width="32" height="32" style="object-fit: contain;">
+                        <span style="color: #00CED1; font-weight: 700;">VIVA</span>
+                    </a>
+                    <p class="footer-tagline">
+                        Yaratıcı reklam çözümleri ile markanızı dijital dünyada zirveye taşıyoruz.
+                    </p>
+                </div>
+
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Hizmetler</h4>
+                        <ul>
+                            <li><a href="index.html#hizmetler">Dijital Reklam</a></li>
+                            <li><a href="index.html#hizmetler">Sosyal Medya</a></li>
+                            <li><a href="index.html#hizmetler">Marka Kimliği</a></li>
+                            <li><a href="index.html#hizmetler">İçerik Üretimi</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-column">
+                        <h4>Şirket</h4>
+                        <ul>
+                            <li><a href="hakkimizda.html">Hakkımızda</a></li>
+                            <li><a href="portfolyo.html">Portföy</a></li>
+                            <li><a href="blog.html">Blog</a></li>
+                            <li><a href="ekibimiz.html">Ekibimiz</a></li>
+                            <li><a href="kariyer.html">Kariyer</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-column">
+                        <h4>Kaynaklar</h4>
+                        <ul>
+                            <li><a href="basari-hikayeleri.html">Başarı Hikayeleri</a></li>
+                            <li><a href="rehberler.html">Rehberler</a></li>
+                            <li><a href="sss.html">SSS</a></li>
+                            <li><a href="destek.html">Destek</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-column">
+                        <h4>İletişim</h4>
+                        <ul>
+                            <li><a href="mailto:vivaadsagency@gmail.com">vivaadsagency@gmail.com</a></li>
+                            <li><a href="tel:+905346823427">0534 682 34 27</a></li>
+                            <li>Gaziantep, Türkiye</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 Viva Reklam Ajansı. Tüm hakları saklıdır.</p>
+                <div class="social-links">
+                    <a href="https://instagram.com/viva_advert0" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" fill="none" stroke="black" stroke-width="2"/>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="black" stroke-width="2"/>
+                        </svg>
+                    </a>
+                    <a href="https://youtube.com/@viva_advert0" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/>
+                            <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="black"/>
+                        </svg>
+                    </a>
+                    <a href="https://tiktok.com/@viva_advert0" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        const modal = document.getElementById('downloadModal');
+        const step1 = document.getElementById('step1');
+        const step2 = document.getElementById('step2');
+        const closeModalBtn = document.getElementById('closeModal');
+        const followInstagramBtn = document.getElementById('followInstagram');
+        const alreadyFollowedBtn = document.getElementById('alreadyFollowed');
+        const confirmFollowBtn = document.getElementById('confirmFollow');
+        const backToStep1Btn = document.getElementById('backToStep1');
+        const unlockButtons = document.querySelectorAll('.unlock-btn');
+        const verificationBadge = document.getElementById('verificationBadge');
+
+        
+        function checkVerification() {
+            const isVerified = localStorage.getItem('vivaInstagramFollower') === 'true';
+            if (isVerified) {
+                unlockAllGuides();
+            }
+            return isVerified;
+        }
+
+        
+        function unlockAllGuides() {
+            document.querySelectorAll('.feature-card').forEach(card => {
+                card.classList.remove('locked');
+                const content = card.querySelector('.guide-content');
+                const btn = card.querySelector('.unlock-btn');
+                if (content && btn) {
+                    content.classList.add('unlocked');
+                    btn.style.display = 'none';
+                }
+            });
+            verificationBadge.style.display = 'block';
+        }
+
+        
+        function showModal() {
+            modal.classList.add('active');
+            step1.classList.add('active');
+            step2.classList.remove('active');
+        }
+
+       
+        function closeModal() {
+            modal.classList.remove('active');
+        }
+
+        
+        function goToStep2() {
+            step1.classList.remove('active');
+            step2.classList.add('active');
+        }
+
+        
+        function goToStep1() {
+            step2.classList.remove('active');
+            step1.classList.add('active');
+        }
+
+       
+        function confirmFollow() {
+            localStorage.setItem('vivaInstagramFollower', 'true');
+            unlockAllGuides();
+            closeModal();
+            
+            
+            const successMsg = document.createElement('div');
+            successMsg.style.cssText = 'position: fixed; top: 20px; right: 20px; background: linear-gradient(135deg, #00CED1, #87CEEB); color: white; padding: 1rem 2rem; border-radius: 10px; z-index: 10001; animation: slideIn 0.3s ease-out;';
+            successMsg.textContent = '✓ Tüm rehberler açıldı! Teşekkürler 🎉';
+            document.body.appendChild(successMsg);
+            
+            setTimeout(() => {
+                successMsg.remove();
+            }, 3000);
+        }
+
+        
+        unlockButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                if (!checkVerification()) {
+                    showModal();
+                }
+            });
+        });
+
+        closeModalBtn.addEventListener('click', closeModal);
+        
+        followInstagramBtn.addEventListener('click', function() {
+            setTimeout(goToStep2, 1000);
+        });
+        
+        alreadyFollowedBtn.addEventListener('click', goToStep2);
+        confirmFollowBtn.addEventListener('click', confirmFollow);
+        backToStep1Btn.addEventListener('click', goToStep1);
+
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        
+        checkVerification();
+    </script>
+</body>
+</html>

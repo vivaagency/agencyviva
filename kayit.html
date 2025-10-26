@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kayıt - Viva Reklam Ajansı</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <img src="public/logo.png" alt="Viva Logo" width="40" height="40" style="object-fit: contain;">
+                    <span><span style="color: #00CED1; font-weight: 700;">VIVA</span> <span style="color: rgba(255, 255, 255, 0.9); font-weight: 500;">Reklam Ajansı</span></span>
+                </a>
+
+                <nav class="desktop-nav">
+                    <a href="index.html#hizmetler">Hizmetler</a>
+                    <a href="index.html#paketler">Paketler</a>
+                    <a href="ekibimiz.html">Ekibimiz</a>
+                    <a href="index.html#iletisim">İletişim</a>
+                </nav>
+
+                <div class="header-actions">
+                    <a href="https://wa.me/905346823427" class="btn-primary">Teklif Alın</a>
+                    <button class="mobile-menu-btn" id="mobileMenuBtn">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="mobile-menu" id="mobileMenu">
+            <nav>
+                <a href="index.html#hizmetler">Hizmetler</a>
+                <a href="index.html#paketler">Paketler</a>
+                <a href="ekibimiz.html">Ekibimiz</a>
+                <a href="index.html#iletisim">İletişim</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="team-hero">
+        <div class="container">
+            <div class="team-hero-content">
+                <div class="hero-badge">
+                    <span class="badge-icon">🚀</span>
+                    <span>Kayıt Ol</span>
+                </div>
+                <h1 class="hero-title">
+                    Hemen <span class="gradient-text">Başlayın</span>
+                </h1>
+                <p class="hero-description">
+                    Paketinizi seçin ve markanızı dijital dünyada büyütmeye başlayın.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="support-form-section">
+        <div class="container">
+            <div class="support-form-container">
+                <form class="support-form" id="registrationForm">
+                    <div class="form-group">
+                        <label for="fullname">Ad Soyad *</label>
+                        <input type="text" id="fullname" name="fullname" required placeholder="Adınız ve soyadınız">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="company">Şirket Adı *</label>
+                        <input type="text" id="company" name="company" required placeholder="Şirket adınız">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">E-posta *</label>
+                        <input type="email" id="email" name="email" required placeholder="ornek@email.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Telefon *</label>
+                        <input type="tel" id="phone" name="phone" required placeholder="05XX XXX XX XX">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="package">Paket Seçimi *</label>
+                        <select id="package" name="package" required>
+                            <option value="">Paket seçiniz</option>
+                            <option value="minimal">Minimal - ₺2.499/ay</option>
+                            <option value="baslangic">Başlangıç - ₺5.999/ay</option>
+                            <option value="profesyonel">Profesyonel - ₺12.999/ay</option>
+                            <option value="kurumsal">Kurumsal - ₺24.999/ay</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sector">Sektör</label>
+                        <input type="text" id="sector" name="sector" placeholder="Hangi sektörde faaliyet gösteriyorsunuz?">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Ek Bilgiler</label>
+                        <textarea id="message" name="message" rows="4" placeholder="Hedefleriniz ve beklentileriniz hakkında bilgi verin..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-primary btn-full">Kayıt İşlemini Tamamla</button>
+
+                    <p style="text-align: center; margin-top: 1rem; font-size: 0.875rem; color: rgba(255, 255, 255, 0.6);">
+                        Kayıt olduktan sonra ekibimiz en kısa sürede sizinle iletişime geçecektir.
+                    </p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <img src="public/logo.png" alt="Viva Logo" width="32" height="32" style="object-fit: contain;">
+                        <span style="color: #00CED1; font-weight: 700;">VIVA</span>
+                    </a>
+                    <p class="footer-tagline">
+                        Yaratıcı reklam çözümleri ile markanızı dijital dünyada zirveye taşıyoruz.
+                    </p>
+                </div>
+
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Hizmetler</h4>
+                        <ul>
+                            <li><a href="index.html#hizmetler">Dijital Reklam</a></li>
+                            <li><a href="index.html#hizmetler">Sosyal Medya</a></li>
+                            <li><a href="index.html#hizmetler">Marka Kimliği</a></li>
+                            <li><a href="index.html#hizmetler">İçerik Üretimi</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-column">
+                        <h4>Şirket</h4>
+                        <ul>
+                            <li><a href="hakkimizda.html">Hakkımızda</a></li>
+                            <li><a href="portfolyo.html">Portföy</a></li>
+                            <li><a href="blog.html">Blog</a></li>
+                            <li><a href="ekibimiz.html">Ekibimiz</a></li>
+                            <li><a href="kariyer.html">Kariyer</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-column">
+                        <h4>Kaynaklar</h4>
+                        <ul>
+                            <li><a href="basari-hikayeleri.html">Başarı Hikayeleri</a></li>
+                            <li><a href="rehberler.html">Rehberler</a></li>
+                            <li><a href="sss.html">SSS</a></li>
+                            <li><a href="destek.html">Destek</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-column">
+                        <h4>İletişim</h4>
+                        <ul>
+                            <li><a href="mailto:vivaadsagency@gmail.com">vivaadsagency@gmail.com</a></li>
+                            <li><a href="tel:+905346823427">0534 682 34 27</a></li>
+                            <li>Gaziantep, Türkiye</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 Viva Reklam Ajansı. Tüm hakları saklıdır.</p>
+                <div class="social-links">
+                    <a href="https://instagram.com/viva_advert0" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" fill="none" stroke="black" stroke-width="2"/>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="black" stroke-width="2"/>
+                        </svg>
+                    </a>
+                    <a href="https://youtube.com/@viva_advert0" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+                        </svg>
+                    </a>
+                    <a href="https://tiktok.com/@viva_advert0" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const fullname = document.getElementById('fullname').value;
+            const company = document.getElementById('company').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const packageName = document.getElementById('package').options[document.getElementById('package').selectedIndex].text;
+            const sector = document.getElementById('sector').value;
+            const message = document.getElementById('message').value;
+            
+            const whatsappMessage = `*Yeni Paket Kaydı*%0A%0A*Ad Soyad:* ${fullname}%0A*Şirket:* ${company}%0A*E-posta:* ${email}%0A*Telefon:* ${phone}%0A*Paket:* ${packageName}%0A*Sektör:* ${sector}%0A*Ek Bilgiler:* ${message}`;
+            
+            window.location.href = `https://wa.me/905346823427?text=${whatsappMessage}`;
+        });
+    </script>
+</body>
+</html>
